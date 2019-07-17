@@ -100,7 +100,7 @@
       }
 
       showTable() {
-        alert("Perro");
+        this.dispatchEvent(new CustomEvent('show-table', {detail: null}));
       }
     }
     window.customElements.define(CardListName.is, CardListName);
