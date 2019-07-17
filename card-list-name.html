@@ -1,0 +1,108 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="card-list-name">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card {
+        display: table;
+        width: 100%;
+      }
+
+      .card>div {
+        display: table-row;
+        width: 100%;
+      }
+      .card>div>div {
+        display: table-cell;
+        width: 50%;
+      }
+    </style>
+    <h2>[[titulo]]</h2>
+
+    <div class="card">
+      <template is="dom-repeat" items="{{contacto}}">
+          <div>
+              <div style="font-weight: [[item.typetext]]">
+                  [[item.key]]
+              </div>
+              <div style="font-weight: [[item.typetext]]">
+                  [[item.value]]
+              </div>
+          </div>
+      </template>
+  </div>
+
+  <div>
+    <button on-click="showTable">[[boton.text]]</button>
+    
+  </div>
+  </template>
+
+  <script>
+    /**
+     * `card-list-name`
+     * Tarjeta con lista y evento
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class CardListName extends Polymer.Element {
+      static get is() { return 'card-list-name'; }
+      static get properties() {
+        return {
+          titulo: {
+            type: String,
+            value: 'Card List Action  '
+          },
+          contacto: {
+            type: Array,
+            value:function() {
+              return [
+                {
+                  "key": "Key 0",
+                  "value": "Value 0",
+                  "typetext":"normal"
+                },
+                {
+                  "key": "Key 1",
+                  "value": "Value 1",
+                  "typetext":"normal"
+                },
+                {
+                  "key": "Key 2",
+                  "value": "Value 2",
+                  "typetext":"bold"
+                },
+                {
+                  "key": "Key 3",
+                  "value": "Value 3",
+                  "typetext":"normal"
+                }
+              ];
+            }
+          },
+          boton: {
+            type: Object,
+            value: function() {
+              return {
+                text: "Ver más",
+                color: "blue",
+                event: "",
+                icon: ""
+            };
+            }
+          }
+        };
+      }
+
+      showTable() {
+        alert("Perro");
+      }
+    }
+    window.customElements.define(CardListName.is, CardListName);
+  </script>
+</dom-module>
