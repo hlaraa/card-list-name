@@ -9,6 +9,8 @@
       .card {
         display: table;
         width: 100%;
+        border: 2px solid #000000;
+        border-radius: 5px;
       }
 
       .card>div {
@@ -32,12 +34,10 @@
                   [[item.value]]
               </div>
           </div>
+          <div>
+            <button on-click="showTable">[[boton.text]]</button>
+          </div>
       </template>
-  </div>
-
-  <div>
-    <button on-click="showTable">[[boton.text]]</button>
-    
   </div>
   </template>
 
