@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./bower_components/iron-icon/iron-icon.html">
 
 <dom-module id="card-list-name">
   <template>
@@ -37,6 +38,12 @@
               </div>
           </div>
       </template>
+        
+        <div class="divlink" on-click="_linkevent">
+            <iron-icon class="ojo" icon="search"></iron-icon>
+            <span class="ojo">[[link.text]]</span>
+        </div>
+        
       <div>
           <button on-click="showTable">[[boton.text]]</button>
       </div>
