@@ -90,6 +90,7 @@
       }
 
       showTable() {
+          alert(JSON.stringify(this.contacto));
         this.dispatchEvent(new CustomEvent('show-table', {detail: null}));
       }
     }
