@@ -11,42 +11,45 @@
         display: block;
       }
       .card {
-        display: table;
-        width: 90%;
-        padding: 5%;
+        display: inline-table;
+        width: 100%;
+        padding: 1%;
         border: 2px solid #000000;
         border-radius: 5px;
       }
 
       .card>div {
         display: table-row;
-        width: 100%;
         line-height: 25px;
       }
       .card>div>div {
         display: table-cell;
-        width: 50%;
+          padding: 2%;
+      }
+      .right {
+          text-align: right;
       }
     </style>
     <h2>[[titulo]]</h2>
-
-    <template is="dom-repeat" items="{{contacto.data}}">
         <div class="card">
-          <div>
-              <div>
-                  [[item.balanceType]]
+            <template is="dom-repeat" items="{{contacto.data}}">
+                <div>
+                  <div>
+                      [[txtSaldosParse(item.balanceType)]]
+                  </div>
+                  <div class="right">
+                      [[item.amount]]
+                  </div>
               </div>
-              <div>
-                  [[item.amount]]
-              </div>
-          </div>
-            
-          <div class="divlink" on-click="_linkevent">
-            <iron-icon class="ojo" icon="icons:shop"></iron-icon>
-            <span class="ojo">[[item.currency]]</span>
-          </div>
+                
+                
+            </template>
+            <div class="divlink" on-click="_linkevent">
+                <iron-icon class="ojo" icon="icons:shop"></iron-icon>
+                <span class="ojo">[[item.currency]]</span>
+            </div>
       </div>
-    </template>
+      
       
   </template>
 
@@ -71,6 +74,9 @@
             type: Array,
             value: []
           },
+          saldo: {
+            type: String
+          },
           boton: {
             type: Object,
             value: function() {
@@ -88,6 +94,27 @@
       showTable() {
           alert(JSON.stringify(this.contacto));
         this.dispatchEvent(new CustomEvent('show-table', {detail: null}));
+      }
+        
+      txtSaldosParse(original) {
+          switch(original) {
+                 case 'AVAILABLE_BALANCE': 
+                  original = "SALDO DISPONIBLE";
+                  break;
+                 case 'INVESTMENT_BALANCE': 
+                  original = "BALANCE DE INVERSIÓN";
+                  break;
+                 case 'WITHHELD_DEPOSIT_BALANCE': 
+                  original = "SALDO DE DEPÓSITO";
+                  break;
+                 case 'WITHHELD_WITHDRAWAL_BALANCE': 
+                  original = "BALANCE DE RETIRADA";
+                  break;
+                 case 'TOTAL_BALANCE': 
+                  original = "BALANCE TOTAL";
+                  break;
+            }
+          return original;
       }
     }
     window.customElements.define(CardListName.is, CardListName);
