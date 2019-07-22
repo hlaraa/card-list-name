@@ -30,27 +30,28 @@
     </style>
     <h2>[[titulo]]</h2>
 
-    <div class="card">
-      <template is="dom-repeat" items="{{contacto}}">
+    <template is="dom-repeat" items="{{contacto}}">
+        <div class="card">
           <div>
-              <div style="font-weight: [[item.typetext]]">
+              <div style="font-weight: [[item.balanceType]]">
                   [[item.key]]
               </div>
-              <div style="font-weight: [[item.typetext]]">
+              <div style="font-weight: [[item.amount]]">
                   [[item.value]]
               </div>
           </div>
-      </template>
-        
-        <div class="divlink" on-click="_linkevent">
+            
+          <div class="divlink" on-click="_linkevent">
             <iron-icon class="ojo" icon="icons:shop"></iron-icon>
             <span class="ojo">[[link.text]]</span>
-        </div>
-        
-      <div>
-          <button on-click="showTable">[[boton.text]]</button>
+          </div>
+
+          <div>
+              <button on-click="showTable">[[boton.text]]</button>
+          </div>
       </div>
-  </div>
+    </template>
+      
   </template>
 
   <script>
