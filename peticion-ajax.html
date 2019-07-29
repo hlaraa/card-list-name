@@ -1,0 +1,68 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<dom-module id="peticion-ajax">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+      
+    <iron-ajax
+        auto=[[auto]]
+        url="[[url]]"
+        handle-as="[[tipo]]"
+        header="[[headers]]"
+        on-response="onResponse" 
+        on-error="onError">
+    </iron-ajax>
+    
+      
+  </template>
+
+  <script>
+    /**
+     * `peticion-ajax`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class PeticionAjax extends Polymer.Element {
+      static get is() { return 'peticion-ajax'; }
+      static get properties() {
+        return {
+          tipo: {
+            type: String,
+            value: 'json'
+          },
+          url: {
+            type: String
+          },
+          auto: {
+            type: boolean,
+            value: false
+          },
+          headers: {
+              type: Object,
+              value: []
+          }
+        };
+      }
+        
+      onResponse() {
+        this.dispatchEvent(new CustomEvent('respuesta-ok', {detail: null}));
+      }
+        
+      onError() {
+        this.dispatchEvent(new CustomEvent('respuesta-error', {detail: null}));
+      }
+        
+        
+    }
+
+    window.customElements.define(PeticionAjax.is, PeticionAjax);
+  </script>
+</dom-module>
