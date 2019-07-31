@@ -4,7 +4,7 @@
 <link rel="import" href="../iron-icons/image-icons.html">
 
 
-<dom-module id="card-list-name">
+<dom-module id="card-list-2">
   <template>
     <style>
       :host {
@@ -32,7 +32,7 @@
     </style>
     <h2>[[titulo]]</h2>
         <div class="card">
-            <template is="dom-repeat" items="[[generateCard]]">
+            <template is="dom-repeat" items="[[generateCard(contacto)]]">
                 <div>
                   <div>
                       [[item.key]]
@@ -96,13 +96,13 @@
         this.dispatchEvent(new CustomEvent('show-table', {detail: null}));
       }
         
-      generateCard() {
-          nombre = this.contacto.data.creatorBusinessAgent.fullName;
-          cuenta = this.contacto.data.number;
-          fApertura = this.contacto.data.openingDate;
-          status = this.contacto.data.status.name;
-          bloquedapor = this.contacto.data.blocks[0].description;
-          fBloqueo = this.contacto.data.blocks[0].blockDate;
+      generateCard(obj) {
+          var nombre = obj.data.creatorBusinessAgent.fullName;
+          var cuenta = obj.data.number;
+          var fApertura = obj.data.openingDate;
+          var status = obj.data.status.name;
+          var bloquedapor = obj.data.blocks[0].description;
+          var fBloqueo = obj.data.blocks[0].blockDate;
           
           this.objTarjeta.push(
               {
@@ -111,35 +111,35 @@
               }
           );
           
-          objTarjeta.push(
+          this.objTarjeta.push(
               {
                   'key': 'Cuenta',
                   'value': cuenta
               }
           );
           
-          objTarjeta.push(
+          this.objTarjeta.push(
               {
                   'key': 'Fecha de apertura',
                   'value': fApertura
               }
           );
           
-          objTarjeta.push(
+          this.objTarjeta.push(
               {
                   'key': 'Estatus',
                   'value': status
               }
           );
           
-          objTarjeta.push(
+          this.objTarjeta.push(
               {
                   'key': 'Bloqueada por',
                   'value': bloquedapor
               }
           );
           
-          objTarjeta.push(
+          this.objTarjeta.push(
               {
                   'key': 'Fecha de bloqueo',
                   'value': fBloqueo
@@ -147,7 +147,7 @@
           );
           
           
-          return objTarjeta;
+          return this.objTarjeta;
       }
     }
     window.customElements.define(CardList2.is, CardList2);
