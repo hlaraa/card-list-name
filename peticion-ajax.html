@@ -10,10 +10,10 @@
     </style>
       
     <iron-ajax
+        id="peticionAjax"
         auto=[[auto]]
         url="[[url]]"
         handle-as="[[tipo]]"
-        header="[[headers]]"
         on-response="onResponse" 
         on-error="onError">
     </iron-ajax>
@@ -39,25 +39,43 @@
             value: 'json'
           },
           url: {
-            type: String
+            type: String,
+            value: ""
           },
           auto: {
-            type: boolean,
+            type: Boolean,
             value: false
           },
-          headers: {
-              type: Object,
-              value: []
+          respuesta: {
+            type: Object,
+            value: ""
+          },
+          responsewarningdescription: {
+            type: String,
+            value: ""
           }
         };
       }
         
-      onResponse() {
-        this.dispatchEvent(new CustomEvent('respuesta-ok', {detail: null}));
+      onResponse(e) {
+        console.log("Servicio respondió bien");
+        this.respuesta = e.detail.response;
+        this.responsewarningdescription = e.detail.xhr.getResponseHeader('Responsewarningdescription');
+        this.dispatchEvent(new CustomEvent('respuesta-ok', {
+            detail: {
+                'respuesta': this.respuesta,
+                'responsewarningdescription': this.responsewarningdescription,
+            }
+        }));
       }
         
       onError() {
+        console.log("Servicio respondió mal");
         this.dispatchEvent(new CustomEvent('respuesta-error', {detail: null}));
+      }
+        
+      execute() {
+        this.$.peticionAjax.generateRequest();
       }
         
         

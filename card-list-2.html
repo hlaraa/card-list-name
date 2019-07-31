@@ -1,0 +1,155 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icons/image-icons.html">
+
+
+<dom-module id="card-list-name">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card {
+        display: inline-table;
+        width: 100%;
+        padding: 1%;
+        border: 2px solid #000000;
+        border-radius: 5px;
+      }
+
+      .card>div {
+        display: table-row;
+        line-height: 25px;
+      }
+      .card>div>div {
+        display: table-cell;
+          padding: 2%;
+      }
+      .right {
+          text-align: right;
+      }
+    </style>
+    <h2>[[titulo]]</h2>
+        <div class="card">
+            <template is="dom-repeat" items="[[generateCard]]">
+                <div>
+                  <div>
+                      [[item.key]]
+                  </div>
+                  <div class="right">
+                      [[item.value]]
+                  </div>
+              </div>
+                
+                
+            </template>
+            <div class="divlink" on-click="_linkevent">
+                <iron-icon class="ojo" icon="icons:shop"></iron-icon>
+                <span class="ojo">Ver más</span>
+            </div>
+      </div>
+      
+      
+  </template>
+
+  <script>
+    /**
+     * `card-list-name`
+     * Tarjeta con lista y evento
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class CardList2 extends Polymer.Element {
+      static get is() { return 'card-list-2'; }
+      static get properties() {
+        return {
+          titulo: {
+            type: String,
+            value: 'INFORMACIÓN DE CUENTA'
+          },
+          contacto: {
+            type: Object
+          },
+          objTarjeta: {
+            type: Array,
+            value: []
+          },
+          boton: {
+            type: Object,
+            value: function() {
+              return {
+                text: "Ver más",
+                color: "blue",
+                event: "",
+                icon: ""
+            };
+            }
+          }
+        };
+      }
+
+      showTable() {
+          alert(JSON.stringify(this.contacto));
+        this.dispatchEvent(new CustomEvent('show-table', {detail: null}));
+      }
+        
+      generateCard() {
+          nombre = this.contacto.data.creatorBusinessAgent.fullName;
+          cuenta = this.contacto.data.number;
+          fApertura = this.contacto.data.openingDate;
+          status = this.contacto.data.status.name;
+          bloquedapor = this.contacto.data.blocks[0].description;
+          fBloqueo = this.contacto.data.blocks[0].blockDate;
+          
+          this.objTarjeta.push(
+              {
+                  'key': 'Nombre',
+                  'value': nombre
+              }
+          );
+          
+          objTarjeta.push(
+              {
+                  'key': 'Cuenta',
+                  'value': cuenta
+              }
+          );
+          
+          objTarjeta.push(
+              {
+                  'key': 'Fecha de apertura',
+                  'value': fApertura
+              }
+          );
+          
+          objTarjeta.push(
+              {
+                  'key': 'Estatus',
+                  'value': status
+              }
+          );
+          
+          objTarjeta.push(
+              {
+                  'key': 'Bloqueada por',
+                  'value': bloquedapor
+              }
+          );
+          
+          objTarjeta.push(
+              {
+                  'key': 'Fecha de bloqueo',
+                  'value': fBloqueo
+              }
+          );
+          
+          
+          return objTarjeta;
+      }
+    }
+    window.customElements.define(CardList2.is, CardList2);
+  </script>
+</dom-module>
