@@ -1,0 +1,86 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<dom-module id="peticion-ajax-2">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+      
+    <iron-ajax
+        id="peticionAjax"
+        auto=[[auto]]
+        url="[[url]]"
+        handle-as="[[tipo]]"
+        on-response="onResponse" 
+        on-error="onError">
+    </iron-ajax>
+    
+      
+  </template>
+
+  <script>
+    /**
+     * `peticion-ajax-2`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class PeticionAjax2 extends Polymer.Element {
+      static get is() { return 'peticion-ajax-2'; }
+      static get properties() {
+        return {
+          tipo: {
+            type: String,
+            value: 'json'
+          },
+          url: {
+            type: String,
+            value: ""
+          },
+          auto: {
+            type: Boolean,
+            value: false
+          },
+          respuesta: {
+            type: Object,
+            value: ""
+          },
+          responsewarningdescription: {
+            type: String,
+            value: ""
+          }
+        };
+      }
+        
+      onResponse(e) {
+        console.log("Servicio respondió bien");
+        this.respuesta = e.detail.response;
+        this.responsewarningdescription = e.detail.xhr.getResponseHeader('Responsewarningdescription');
+        this.dispatchEvent(new CustomEvent('respuesta-ok', {
+            detail: {
+                'respuesta': this.respuesta,
+                'responsewarningdescription': this.responsewarningdescription,
+            }
+        }));
+      }
+        
+      onError() {
+        console.log("Servicio respondió mal");
+        this.dispatchEvent(new CustomEvent('respuesta-error', {detail: null}));
+      }
+        
+      execute() {
+        this.$.peticionAjax.generateRequest();
+      }
+        
+        
+    }
+
+    window.customElements.define(PeticionAjax2.is, PeticionAjax2);
+  </script>
+</dom-module>
