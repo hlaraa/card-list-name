@@ -58,12 +58,26 @@
       }
         
       onResponse(e) {
-        console.log("Servicio respondió bien");
+        var $ = this;
         this.respuesta = e.detail.response;
+          
+        console.log("Servicio respondió bien");
+        var newarr = new Array();
+        var balance = "";
+        
+        this.respuesta.data.forEach(function(res) {
+          newarr.push(
+              {
+                  "key": $.traduceBalance(res.balanceType),
+                  "value": res.amount,
+              }
+          ); 
+        });
+          
         this.responsewarningdescription = e.detail.xhr.getResponseHeader('Responsewarningdescription');
         this.dispatchEvent(new CustomEvent('respuesta-ok', {
             detail: {
-                'respuesta': this.respuesta,
+                'respuesta': newarr,
                 'responsewarningdescription': this.responsewarningdescription,
             }
         }));
@@ -77,7 +91,29 @@
       execute() {
         this.$.peticionAjax.generateRequest();
       }
-        
+      
+      
+      traduceBalance(original) {
+          var newTexto = "";
+          switch(original) {
+                 case 'AVAILABLE_BALANCE': 
+                  newTexto = "SALDO DISPONIBLE";
+                  break;
+                 case 'INVESTMENT_BALANCE': 
+                  newTexto = "BALANCE DE INVERSIÓN";
+                  break;
+                 case 'WITHHELD_DEPOSIT_BALANCE': 
+                  newTexto = "SALDO DE DEPÓSITO";
+                  break;
+                 case 'WITHHELD_WITHDRAWAL_BALANCE': 
+                  newTexto = "BALANCE DE RETIRADA";
+                  break;
+                 case 'TOTAL_BALANCE': 
+                  newTexto = "BALANCE TOTAL";
+                  break;
+            }
+          return newTexto;
+      }
         
     }
 

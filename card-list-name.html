@@ -32,13 +32,13 @@
     </style>
     <h2>[[titulo]]</h2>
         <div class="card">
-            <template is="dom-repeat" items="{{contacto.data}}">
+            <template is="dom-repeat" items="{{contacto}}">
                 <div>
                   <div>
-                      [[txtSaldosParse(item.balanceType)]]
+                      [[item.key]]
                   </div>
                   <div class="right">
-                      [[item.amount]]
+                      [[item.value]]
                   </div>
               </div>
                 
@@ -93,29 +93,9 @@
 
       showTable() {
           alert(JSON.stringify(this.contacto));
-        this.dispatchEvent(new CustomEvent('show-table', {detail: null}));
+          this.dispatchEvent(new CustomEvent('show-table', {detail: null}));
       }
         
-      txtSaldosParse(original) {
-          switch(original) {
-                 case 'AVAILABLE_BALANCE': 
-                  original = "SALDO DISPONIBLE";
-                  break;
-                 case 'INVESTMENT_BALANCE': 
-                  original = "BALANCE DE INVERSIÓN";
-                  break;
-                 case 'WITHHELD_DEPOSIT_BALANCE': 
-                  original = "SALDO DE DEPÓSITO";
-                  break;
-                 case 'WITHHELD_WITHDRAWAL_BALANCE': 
-                  original = "BALANCE DE RETIRADA";
-                  break;
-                 case 'TOTAL_BALANCE': 
-                  original = "BALANCE TOTAL";
-                  break;
-            }
-          return original;
-      }
     }
     window.customElements.define(CardListName.is, CardListName);
   </script>

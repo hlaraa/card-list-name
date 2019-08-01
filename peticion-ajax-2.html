@@ -59,7 +59,8 @@
         
       onResponse(e) {
         console.log("Servicio respondió bien");
-        this.respuesta = e.detail.response;
+        this.respuesta = this.generateCard(e.detail.response);
+        
         this.responsewarningdescription = e.detail.xhr.getResponseHeader('Responsewarningdescription');
         this.dispatchEvent(new CustomEvent('respuesta-ok', {
             detail: {
@@ -78,7 +79,36 @@
         this.$.peticionAjax.generateRequest();
       }
         
-        
+      generateCard(obj) {
+          var objTarjeta = [
+              {
+                  'key': 'Nombre',
+                  'value': obj.data.creatorBusinessAgent.fullName
+              },
+              {
+                  'key': 'Cuenta',
+                  'value': obj.data.number
+              },
+              {
+                  'key': 'Fecha de apertura',
+                  'value': obj.data.openingDate
+              },
+              {
+                  'key': 'Estatus',
+                  'value': obj.data.status.name
+              },
+              {
+                  'key': 'Bloqueada por',
+                  'value': obj.data.blocks[0].description
+              },
+              {
+                  'key': 'Fecha de bloqueo',
+                  'value': obj.data.blocks[0].blockDate
+              }
+          ];
+          
+          return objTarjeta;
+      }
     }
 
     window.customElements.define(PeticionAjax2.is, PeticionAjax2);
